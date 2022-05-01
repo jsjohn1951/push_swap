@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/01 12:52:58 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/01 15:19:36 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ void	sort_five(t_num *astack, t_num *bstack)
 	int	small;
 	int	flag;
 
-	flag = 0;
 	if (!is_sorted(astack))
 	{
 		while (astack->top > 2)
 		{
+			flag = 0;
 			small = find_small(astack);
 			if (find_pos(astack, small) < astack->top / 2)
 				flag = 1;
-			while (astack->stack[astack->top] != small && flag == 1)
+			while (astack->stack[astack->top] != small && flag)
 				rra(astack);
 			while (astack->stack[astack->top] != small && !flag)
 				ra(astack);
@@ -54,21 +54,16 @@ void	sort_five(t_num *astack, t_num *bstack)
 		pa(astack, bstack);
 }
 
-void	printer2(t_ghost *ghost, int i)
-{
-	while (i >= 0)
-	{
-		ft_printf("%d\n", ghost->ghosted[i]);
-		i--;
-	}
-}
-
 void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 {
 	int	mid;
+	int	top;
+	int	min2;
 
-	mid = ghost->ghosted[astack->top - min_index];
-	while (has_less_than(astack, mid))
+	top = astack->top;
+	min2 = min_index;
+	mid = ghost->ghosted[top - min_index];
+	while (has_less_than(astack, mid) && min_index <= top)
 	{
 		while (has_less_than(astack, mid) && astack->top > 0)
 		{
@@ -83,12 +78,13 @@ void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 		}
 		if (!has_less_than(astack, mid) && astack->top > 0)
 		{
-			while (astack->stack[astack->top] != close_to_mid(astack, mid))
+			while (astack->stack[astack->top] != mid)
 				ra(astack);
 			pb(astack, bstack);
 		}
-		min_index -= min_index;
-		mid = ghost->ghosted[min_index];
+		min_index += min2;
+		if (min_index <= top)
+			mid = ghost->ghosted[top - min_index];
 	}
 }
 
@@ -124,6 +120,21 @@ void	sort_hundred(t_num *astack, t_num *bstack)
 			min_index = (astack->top) / 11;
 		set_ghosted(astack, &ghost);
 		algo_a(astack, bstack, &ghost, min_index);
+		while (!is_sorted(astack) && astack->top < 4)
+		{
+			if (astack->top <= 2)
+			{
+				bstack->bottom = bstack->top + 1;
+				sort_three(astack, bstack);
+				if (astack->stack[astack->top] > astack->stack[astack->top - 1])
+					sa(astack);
+			}
+			else if (astack->top >= 3)
+			{
+				bstack->bottom = bstack->top + 1;
+				sort_five(astack, bstack);
+			}
+		}
 		algo_b(astack, bstack);
 		free(ghost.ghosted);
 	}
