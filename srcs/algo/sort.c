@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/04/30 20:15:32 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/01 12:52:58 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,62 +63,71 @@ void	printer2(t_ghost *ghost, int i)
 	}
 }
 
+void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
+{
+	int	mid;
+
+	mid = ghost->ghosted[astack->top - min_index];
+	while (has_less_than(astack, mid))
+	{
+		while (has_less_than(astack, mid) && astack->top > 0)
+		{
+			if (astack->stack[astack->top] < mid)
+				pb(astack, bstack);
+			else if (astack->stack[astack->top - 1] < mid)
+				sa(astack);
+			else if (astack->stack[0] < mid)
+				rra(astack);
+			else
+				ra(astack);
+		}
+		if (!has_less_than(astack, mid) && astack->top > 0)
+		{
+			while (astack->stack[astack->top] != close_to_mid(astack, mid))
+				ra(astack);
+			pb(astack, bstack);
+		}
+		min_index -= min_index;
+		mid = ghost->ghosted[min_index];
+	}
+}
+
+void	algo_b(t_num *astack, t_num *bstack)
+{
+	while (bstack->top >= 0)
+	{
+		if (find_pos(bstack, find_big(bstack)) >= bstack->top / 2
+			&& find_pos(bstack, find_big(bstack)) != bstack->top)
+			rb(bstack);
+		else if (find_pos(bstack, find_big(bstack)) < bstack->top / 2
+			&& find_pos(bstack, find_big(bstack)) != bstack->top)
+			rrb(bstack);
+		else
+			pa(astack, bstack);
+		if (astack->top >= 1)
+			if (astack->stack[astack->top] > astack->stack[astack->top - 1])
+				sa(astack);
+	}
+}
+
 void	sort_hundred(t_num *astack, t_num *bstack)
 {
 	t_ghost	ghost;
+	int		min_index;
 
-	ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
-	(void) bstack;
-	set_ghosted(astack, &ghost);
-	printer2(&ghost, astack->top);
-	free(ghost.ghosted);
+	if (!is_sorted(astack))
+	{
+		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
+		if (astack->top < 100)
+			min_index = (astack->top) / 4;
+		else
+			min_index = (astack->top) / 11;
+		set_ghosted(astack, &ghost);
+		algo_a(astack, bstack, &ghost, min_index);
+		algo_b(astack, bstack);
+		free(ghost.ghosted);
+	}
 }
-
-// void	algo_a(t_num *astack, t_num *bstack)
-// {
-// 	int	mid;
-
-// 	mid = (astack->top + 1) / 2;
-// 	while (has_less_than(astack, mid))
-// 	{
-// 		while (has_less_than(astack, mid) && astack->top > 0)
-// 		{
-// 			if (astack->stack[astack->top] < mid)
-// 				pb(astack, bstack);
-// 			else if (astack->stack[astack->top - 1] < mid)
-// 				sa(astack);
-// 			else if (astack->stack[0] < mid)
-// 				rra(astack);
-// 			else
-// 				ra(astack);
-// 		}
-// 		if (!has_less_than(astack, mid) && astack->top > 0)
-// 		{
-// 			while (astack->stack[astack->top] != close_to_mid(astack, mid))
-// 				ra(astack);
-// 			pb(astack, bstack);
-// 		}
-// 		mid = close_to_mid(astack, find_mid(astack));
-// 	}
-// }
-
-// void	algo_b(t_num *astack, t_num *bstack)
-// {
-// 	while (bstack->top >= 0)
-// 	{
-// 		if (find_pos(bstack, find_big(bstack)) >= bstack->top / 2
-// 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
-// 			rb(bstack);
-// 		else if (find_pos(bstack, find_big(bstack)) < bstack->top / 2
-// 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
-// 			rrb(bstack);
-// 		else
-// 			pa(astack, bstack);
-// 		if (astack->top >= 1)
-// 			if (astack->stack[astack->top] > astack->stack[astack->top - 1])
-// 				sa(astack);
-// 	}
-// }
 
 // void	sort_hundred(t_num *astack, t_num *bstack)
 // {
