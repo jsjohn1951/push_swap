@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/01 15:19:36 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/01 16:53:00 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,25 +115,16 @@ void	sort_hundred(t_num *astack, t_num *bstack)
 	{
 		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
 		if (astack->top < 100)
-			min_index = (astack->top) / 4;
+			min_index = (astack->top) / 5;
 		else
 			min_index = (astack->top) / 11;
 		set_ghosted(astack, &ghost);
 		algo_a(astack, bstack, &ghost, min_index);
-		while (!is_sorted(astack) && astack->top < 4)
+		while (astack->top >= 0)
 		{
-			if (astack->top <= 2)
-			{
-				bstack->bottom = bstack->top + 1;
-				sort_three(astack, bstack);
-				if (astack->stack[astack->top] > astack->stack[astack->top - 1])
-					sa(astack);
-			}
-			else if (astack->top >= 3)
-			{
-				bstack->bottom = bstack->top + 1;
-				sort_five(astack, bstack);
-			}
+			if (astack->stack[astack->top] > astack->stack[0])
+				rra(astack);
+			pb(astack, bstack);
 		}
 		algo_b(astack, bstack);
 		free(ghost.ghosted);
