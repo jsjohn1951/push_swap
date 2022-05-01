@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:16:34 by wismith           #+#    #+#             */
-/*   Updated: 2022/04/30 00:29:07 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/01 23:25:07 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,28 @@ int	abs_value(int num1, int num2)
 	return (res);
 }
 
+int	rtn_index(int top, int i, int index)
+{
+	if (top - i < index)
+		return (1);
+	else
+		return (0);
+}
+
+int	nearest_small(t_num *stack, int min)
+{
+	int	i;
+	int	index;
+
+	i = stack->top;
+	index = 0;
+	while (i >= 0 && stack->stack[i] > min)
+		i--;
+	while (index <= stack->top && stack->stack[index] > min)
+		index++;
+	return (rtn_index(stack->top, i, index));
+}
+
 int	has_less_than(t_num *stack, int num)
 {
 	int	i;
@@ -48,31 +70,4 @@ int	has_less_than(t_num *stack, int num)
 		i--;
 	}
 	return (0);
-}
-
-int	has_greater_than(t_num *stack, int num)
-{
-	int	i;
-
-	i = stack->top;
-	while (i >= 0)
-	{
-		if (stack->stack[i] > num)
-			return (1);
-		i--;
-	}
-	return (0);
-}
-
-int	close_to_mid(t_num *stack, int mid)
-{
-	int	res;
-	int	i;
-
-	i = stack->top + 1;
-	res = stack->stack[stack->top];
-	while (--i)
-		if (abs_value(stack->stack[i], mid) < abs_value(mid, res))
-			res = stack->stack[i];
-	return (res);
 }

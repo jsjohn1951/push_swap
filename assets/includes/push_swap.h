@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/04/30 19:35:54 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/01 23:22:03 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,15 @@ void	set_ghosted(t_num *astack, t_ghost *ghost);
 //tools
 int		find_small(t_num *stack);
 int		find_big(t_num *stack);
-int		find_mid(t_num *stack);
+// int		find_mid(t_num *stack);
 int		find_pos(t_num *stack, int small);
 int		is_sorted(t_num *stack);
 int		ft_atoi_mod(const char *nptr, t_flags *flag);
 int		abs_value(int num1, int num2);
-int		close_to_mid(t_num *stack, int mid);
+// int		close_to_mid(t_num *stack, int mid);
 int		has_less_than(t_num *stack, int num);
-int		has_greater_than(t_num *stack, int num);
+// int		has_greater_than(t_num *stack, int num);
+int		nearest_small(t_num *stack, int min);
 
 //Print
 void	printer(t_num *num1, t_num *num2, int size1, int size2);

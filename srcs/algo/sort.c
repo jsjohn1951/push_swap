@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/01 16:53:00 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 01:41:58 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,53 +56,65 @@ void	sort_five(t_num *astack, t_num *bstack)
 
 void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 {
-	int	mid;
+	int	min;
 	int	top;
-	int	min2;
 
+	min = min_index;
 	top = astack->top;
-	min2 = min_index;
-	mid = ghost->ghosted[top - min_index];
-	while (has_less_than(astack, mid) && min_index <= top)
+	while (astack->top >= 5)
 	{
-		while (has_less_than(astack, mid) && astack->top > 0)
+		while (has_less_than(astack, ghost->ghosted[top - min]) && min <= top)
 		{
-			if (astack->stack[astack->top] < mid)
-				pb(astack, bstack);
-			else if (astack->stack[astack->top - 1] < mid)
+			if (astack->stack[astack->top - 1] <= ghost->ghosted[top - min]
+				&& bstack->stack[bstack->top] < bstack->stack[bstack->top - 1])
+				ss(astack, bstack);
+			else if (astack->stack[astack->top - 1] <= ghost->ghosted[top - min]
+				&& !(astack->stack[astack->top] <= ghost->ghosted[top - min]))
 				sa(astack);
-			else if (astack->stack[0] < mid)
+			else if (nearest_small(astack, ghost->ghosted[top - min]) 
+				&& !(astack->stack[astack->top] <= ghost->ghosted[top - min]))
+				ra(astack);
+			else if (!(astack->stack[astack->top] <= ghost->ghosted[top - min]))
 				rra(astack);
-			else
-				ra(astack);
+			if (astack->stack[astack->top] <= ghost->ghosted[top - min])
+				pb(astack, bstack);
 		}
-		if (!has_less_than(astack, mid) && astack->top > 0)
-		{
-			while (astack->stack[astack->top] != mid)
-				ra(astack);
-			pb(astack, bstack);
-		}
-		min_index += min2;
-		if (min_index <= top)
-			mid = ghost->ghosted[top - min_index];
+		min += min_index;
 	}
+	while (astack->top >= 1)
+	{
+		if (astack->stack[astack->top] > astack->stack[0] 
+			&& !(astack->stack[astack->top - 1] < astack->stack[0]))
+			rra(astack);
+		else if (astack->stack[astack->top] > astack->stack[astack->top - 1])
+			sa(astack);
+		else
+			ra(astack);
+		pb(astack, bstack);
+	}
+	if (astack->stack[astack->top] > astack->stack[0])
+		sa(astack);
 }
 
 void	algo_b(t_num *astack, t_num *bstack)
 {
 	while (bstack->top >= 0)
 	{
-		if (find_pos(bstack, find_big(bstack)) >= bstack->top / 2
+		if (find_pos(bstack, find_big(bstack)) == bstack->top - 1)
+			sb(bstack);
+		else if (find_pos(bstack, find_big(bstack)) > bstack->top / 2
 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
 			rb(bstack);
-		else if (find_pos(bstack, find_big(bstack)) < bstack->top / 2
+		else if (find_pos(bstack, find_big(bstack)) <= bstack->top / 2
 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
 			rrb(bstack);
 		else
 			pa(astack, bstack);
 		if (astack->top >= 1)
+		{
 			if (astack->stack[astack->top] > astack->stack[astack->top - 1])
 				sa(astack);
+		}
 	}
 }
 
@@ -120,56 +132,7 @@ void	sort_hundred(t_num *astack, t_num *bstack)
 			min_index = (astack->top) / 11;
 		set_ghosted(astack, &ghost);
 		algo_a(astack, bstack, &ghost, min_index);
-		while (astack->top >= 0)
-		{
-			if (astack->stack[astack->top] > astack->stack[0])
-				rra(astack);
-			pb(astack, bstack);
-		}
 		algo_b(astack, bstack);
 		free(ghost.ghosted);
 	}
 }
-
-// void	sort_hundred(t_num *astack, t_num *bstack)
-// {
-// 	if (!is_sorted(astack) && astack->top <= 99)
-// 	{
-// 		algo_a(astack, bstack);
-// 		algo_b(astack, bstack);
-// 	}
-// }
-
-// void	sort_hundred(t_num *astack, t_num *bstack)
-// {
-// 	int	small;
-
-// 	if (astack->top <= 9 && !is_sorted(astack))
-// 	{
-// 		int	i;
-// 		int	mid;
-
-// 		i = 6;
-// 		mid = close_to_mid(astack, find_mid(astack));
-// 		while (--i)
-// 		{
-// 			if (astack->stack[astack->top] <= mid)
-// 				pb(astack, bstack);
-// 			if (astack->stack[astack->top] > mid)
-// 				ra(astack);
-// 		}
-// 		bstack->bottom = bstack->top + 1;
-// 		astack->bottom = astack->top + 1;
-// 		sort_five(astack, bstack);
-// 		sort_five(bstack, astack);
-// 		while (bstack->top >= 0)
-// 		{
-// 			while (astack->stack[astack->top] < bstack->stack[bstack->top])
-// 				ra(astack);
-// 			pa(astack, bstack);
-// 		}
-// 		small = find_small(astack);
-// 		while (astack->stack[astack->top] != small)
-// 			ra(astack);
-// 	}
-// }
