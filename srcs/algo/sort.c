@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 01:41:58 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 13:23:06 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 			else if (astack->stack[astack->top - 1] <= ghost->ghosted[top - min]
 				&& !(astack->stack[astack->top] <= ghost->ghosted[top - min]))
 				sa(astack);
-			else if (nearest_small(astack, ghost->ghosted[top - min]) 
+			else if (nearest_small(astack, ghost->ghosted[top - min])
 				&& !(astack->stack[astack->top] <= ghost->ghosted[top - min]))
 				ra(astack);
 			else if (!(astack->stack[astack->top] <= ghost->ghosted[top - min]))
@@ -83,7 +83,7 @@ void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 	}
 	while (astack->top >= 1)
 	{
-		if (astack->stack[astack->top] > astack->stack[0] 
+		if (astack->stack[astack->top] > astack->stack[0]
 			&& !(astack->stack[astack->top - 1] < astack->stack[0]))
 			rra(astack);
 		else if (astack->stack[astack->top] > astack->stack[astack->top - 1])
@@ -96,32 +96,66 @@ void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 		sa(astack);
 }
 
-void	algo_b(t_num *astack, t_num *bstack)
+void	algo_b(t_num *astack, t_num *bstack, t_ghost *ghost, int max_index)
 {
-	while (bstack->top >= 0)
+	int	max;
+
+	max = 0;
+	while (bstack->top >= 1)
 	{
-		if (find_pos(bstack, find_big(bstack)) == bstack->top - 1)
-			sb(bstack);
-		else if (find_pos(bstack, find_big(bstack)) > bstack->top / 2
-			&& find_pos(bstack, find_big(bstack)) != bstack->top)
-			rb(bstack);
-		else if (find_pos(bstack, find_big(bstack)) <= bstack->top / 2
-			&& find_pos(bstack, find_big(bstack)) != bstack->top)
-			rrb(bstack);
-		else
-			pa(astack, bstack);
-		if (astack->top >= 1)
+		while (has_greater_than(bstack, ghost->ghosted[max]))
 		{
-			if (astack->stack[astack->top] > astack->stack[astack->top - 1])
+			if (bstack->stack[bstack->top] < ghost->ghosted[max] 
+				&& bstack->stack[bstack->top - 1] >= ghost->ghosted[max])
+				sb(bstack);
+			else if (bstack->stack[bstack->top] < ghost->ghosted[max] 
+				&& nearest_max(bstack, ghost->ghosted[max]))
+				rb(bstack);
+			else if (!(bstack->stack[bstack->top] >= ghost->ghosted[max])
+				&& !nearest_max(bstack, ghost->ghosted[max]))
+				rrb(bstack);
+			if (bstack->stack[bstack->top] >= ghost->ghosted[max])
+				pa(astack, bstack);
+			if (astack->top >= 1 && astack->stack[astack->top] > astack->stack[astack->top - 1])
 				sa(astack);
 		}
+		max += max_index;
+	}
+	while (bstack->top >= 0)
+	{
+		if (bstack->stack[bstack->top] < bstack->stack[0])
+			sb(bstack);
+		pa(astack, bstack);
 	}
 }
+
+// void	algo_b(t_num *astack, t_num *bstack)
+// {
+// 	while (bstack->top >= 0)
+// 	{
+// 		if (find_pos(bstack, find_big(bstack)) == bstack->top - 1)
+// 			sb(bstack);
+// 		else if (find_pos(bstack, find_big(bstack)) > bstack->top / 2
+// 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
+// 			rb(bstack);
+// 		else if (find_pos(bstack, find_big(bstack)) <= bstack->top / 2
+// 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
+// 			rrb(bstack);
+// 		else
+// 			pa(astack, bstack);
+// 		if (astack->top >= 1)
+// 		{
+// 			if (astack->stack[astack->top] > astack->stack[astack->top - 1])
+// 				sa(astack);
+// 		}
+// 	}
+// }
 
 void	sort_hundred(t_num *astack, t_num *bstack)
 {
 	t_ghost	ghost;
 	int		min_index;
+	int		max_index;
 
 	if (!is_sorted(astack))
 	{
@@ -130,9 +164,10 @@ void	sort_hundred(t_num *astack, t_num *bstack)
 			min_index = (astack->top) / 5;
 		else
 			min_index = (astack->top) / 11;
+		max_index = 2;
 		set_ghosted(astack, &ghost);
 		algo_a(astack, bstack, &ghost, min_index);
-		algo_b(astack, bstack);
+		algo_b(astack, bstack, &ghost, max_index);
 		free(ghost.ghosted);
 	}
 }

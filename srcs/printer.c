@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 14:52:33 by wismith           #+#    #+#             */
-/*   Updated: 2022/04/20 15:50:21 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 12:03:46 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,16 @@ void	printer(t_num *num1, t_num *num2, int size1, int size2)
 		}
 	}
 	ft_printf("-\t-\nA\tB\n");
+}
+
+void	print_ghost(t_ghost *ghost, int top)
+{
+	int	i;
+
+	i = 0;
+	while (i <= top)
+	{
+		ft_printf("%d\n", ghost->ghosted[i]);
+		i++;
+	}
 }

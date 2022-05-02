@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:16:34 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/01 23:25:07 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 12:24:55 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,16 @@ int	nearest_small(t_num *stack, int min)
 	return (rtn_index(stack->top, i, index));
 }
 
-int	has_less_than(t_num *stack, int num)
+int	nearest_max(t_num *stack, int max)
 {
 	int	i;
+	int	index;
 
 	i = stack->top;
-	while (i >= 0)
-	{
-		if (stack->stack[i] < num)
-			return (1);
+	index = 0;
+	while (i >= 0 && stack->stack[i] < max)
 		i--;
-	}
-	return (0);
+	while (index <= stack->top && stack->stack[index] < max)
+		index++;
+	return (rtn_index(stack->top, i, index));
 }

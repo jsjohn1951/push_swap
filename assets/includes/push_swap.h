@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/01 23:22:03 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 12:26:42 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,12 @@ int		ft_atoi_mod(const char *nptr, t_flags *flag);
 int		abs_value(int num1, int num2);
 // int		close_to_mid(t_num *stack, int mid);
 int		has_less_than(t_num *stack, int num);
+int		has_greater_than(t_num *stack, int num);
 // int		has_greater_than(t_num *stack, int num);
 int		nearest_small(t_num *stack, int min);
+int		nearest_max(t_num *stack, int max);
 
 //Print
 void	printer(t_num *num1, t_num *num2, int size1, int size2);
+void	print_ghost(t_ghost *ghost, int top);
 #endif
