@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:43:35 by wismith           #+#    #+#             */
-/*   Updated: 2022/04/24 18:06:33 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:09:57 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	errmsg(t_num *astack, t_num *bstack)
 {
-	ft_putstr_fd("Error\n", 2);
+	write(2, "Error\n", 6);
 	free(astack->stack);
+	astack->stack = NULL;
 	free(bstack->stack);
+	bstack->stack = NULL;
 	exit (1);
 }
 
@@ -80,7 +82,7 @@ void	unidentifiedchar(char **argv)
 	}
 	if (flag)
 	{
-		ft_putstr_fd("Error\n", 2);
+		write(2, "Error\n", 6);
 		exit(1);
 	}
 }

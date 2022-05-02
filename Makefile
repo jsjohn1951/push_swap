@@ -6,7 +6,7 @@
 #    By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/03 19:47:17 by wismith           #+#    #+#              #
-#    Updated: 2022/05/02 14:30:48 by wismith          ###   ########.fr        #
+#    Updated: 2022/05/02 16:25:27 by wismith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = push_swap
 
 .SILENT:
 
-SRCS = push_swap printer parser/parser\
+SRCS = push_swap parser/parser\
 		err/err op/swap op/push op/rota\
 		op/rotb algo/sort tools/finder\
 		tools/ft_atoi_mod tools/finder2\

@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 13:23:19 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 14:15:21 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:26:35 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,12 @@
 
 void	push_swap(t_num *astack, t_num *bstack)
 {
-	// ft_printf("\n%s", KRED);
-	// printer(astack, bstack, astack->top, bstack->top);
-	// ft_printf("%s\n", KNRM);
 	while (!is_sorted(astack) && astack->top <= 4)
 	{
 		sort_three(astack, bstack);
 		sort_five(astack, bstack);
 	}
 	sort_hundred(astack, bstack);
-	// ft_printf("\n%s", KRED);
-	// printer(astack, bstack, astack->top, bstack->top);
-	// ft_printf("%s\n", KNRM);
-	// if (is_sorted(astack))
-	// 	ft_printf(KGRN"\t->is sorted<-\n"KNRM);
 }
 
 int	main(int argc, char **argv)

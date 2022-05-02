@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 14:32:48 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:30:15 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,21 @@ typedef struct s_num
 	int	bottom;
 }	t_num;
 
-//Parser
+// Parser
 void	parser(t_num *astack, t_num *bstack, char **argv);
 
-//Errors
+// Errors
 void	unidentifiedchar(char **argv);
 void	check_num_arg(int argc);
 void	duplicatecheck(t_num *astack, t_num *bstack, int size);
 int		errmsg(t_num *astack, t_num *bstack);
 
-//Op
+// Op
 void	sa(t_num *astack);
 void	sb(t_num *bstack);
 void	ss(t_num *astack, t_num *bstack);
-void	pb(t_num *astack, t_num *bstack);
 void	pa(t_num *astack, t_num *bstack);
+void	pb(t_num *astack, t_num *bstack);
 void	ra(t_num *astack);
 void	rra(t_num *astack);
 void	rb(t_num *bstack);
@@ -77,22 +77,13 @@ void	set_ghosted(t_num *astack, t_ghost *ghost);
 void	astack_rem(t_num *astack, t_num *bstack);
 void	bstack_rem(t_num *astack, t_num *bstack);
 
-//tools
+// tools
 int		find_small(t_num *stack);
-int		find_big(t_num *stack);
-// int		find_mid(t_num *stack);
 int		find_pos(t_num *stack, int small);
 int		is_sorted(t_num *stack);
 int		ft_atoi_mod(const char *nptr, t_flags *flag);
-int		abs_value(int num1, int num2);
-// int		close_to_mid(t_num *stack, int mid);
 int		has_less_than(t_num *stack, int num);
 int		has_greater_than(t_num *stack, int num);
-// int		has_greater_than(t_num *stack, int num);
 int		nearest_small(t_num *stack, int min);
 int		nearest_max(t_num *stack, int max);
-
-//Print
-void	printer(t_num *num1, t_num *num2, int size1, int size2);
-void	print_ghost(t_ghost *ghost, int top);
 #endif
