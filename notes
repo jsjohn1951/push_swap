@@ -1,5 +1,0 @@
-ghosted:
-		0th index = max;
-		astack->top index = min;
-	e.g.
-		13 12 10 9 8 7 6 5 4 3

@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 13:23:06 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 14:33:08 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,24 @@ void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 	int	min;
 	int	top;
 
-	min = min_index;
+	min = 0;
 	top = astack->top;
 	while (astack->top >= 5)
 	{
 		while (has_less_than(astack, ghost->ghosted[top - min]) && min <= top)
 		{
-			if (astack->stack[astack->top - 1] <= ghost->ghosted[top - min]
-				&& bstack->stack[bstack->top] < bstack->stack[bstack->top - 1])
-				ss(astack, bstack);
-			else if (astack->stack[astack->top - 1] <= ghost->ghosted[top - min]
-				&& !(astack->stack[astack->top] <= ghost->ghosted[top - min]))
-				sa(astack);
-			else if (nearest_small(astack, ghost->ghosted[top - min])
+			if (nearest_small(astack, ghost->ghosted[top - min])
 				&& !(astack->stack[astack->top] <= ghost->ghosted[top - min]))
 				ra(astack);
-			else if (!(astack->stack[astack->top] <= ghost->ghosted[top - min]))
+			else if (!(nearest_small(astack, ghost->ghosted[top - min]))
+				&& !(astack->stack[astack->top] <= ghost->ghosted[top - min]))
 				rra(astack);
 			if (astack->stack[astack->top] <= ghost->ghosted[top - min])
 				pb(astack, bstack);
 		}
 		min += min_index;
 	}
-	while (astack->top >= 1)
-	{
-		if (astack->stack[astack->top] > astack->stack[0]
-			&& !(astack->stack[astack->top - 1] < astack->stack[0]))
-			rra(astack);
-		else if (astack->stack[astack->top] > astack->stack[astack->top - 1])
-			sa(astack);
-		else
-			ra(astack);
-		pb(astack, bstack);
-	}
-	if (astack->stack[astack->top] > astack->stack[0])
-		sa(astack);
+	astack_rem(astack, bstack);
 }
 
 void	algo_b(t_num *astack, t_num *bstack, t_ghost *ghost, int max_index)
@@ -105,10 +88,10 @@ void	algo_b(t_num *astack, t_num *bstack, t_ghost *ghost, int max_index)
 	{
 		while (has_greater_than(bstack, ghost->ghosted[max]))
 		{
-			if (bstack->stack[bstack->top] < ghost->ghosted[max] 
+			if (bstack->stack[bstack->top] < ghost->ghosted[max]
 				&& bstack->stack[bstack->top - 1] >= ghost->ghosted[max])
 				sb(bstack);
-			else if (bstack->stack[bstack->top] < ghost->ghosted[max] 
+			else if (bstack->stack[bstack->top] < ghost->ghosted[max]
 				&& nearest_max(bstack, ghost->ghosted[max]))
 				rb(bstack);
 			else if (!(bstack->stack[bstack->top] >= ghost->ghosted[max])
@@ -116,40 +99,14 @@ void	algo_b(t_num *astack, t_num *bstack, t_ghost *ghost, int max_index)
 				rrb(bstack);
 			if (bstack->stack[bstack->top] >= ghost->ghosted[max])
 				pa(astack, bstack);
-			if (astack->top >= 1 && astack->stack[astack->top] > astack->stack[astack->top - 1])
+			if (astack->top >= 1
+				&& astack->stack[astack->top] > astack->stack[astack->top - 1])
 				sa(astack);
 		}
 		max += max_index;
 	}
-	while (bstack->top >= 0)
-	{
-		if (bstack->stack[bstack->top] < bstack->stack[0])
-			sb(bstack);
-		pa(astack, bstack);
-	}
+	bstack_rem(astack, bstack);
 }
-
-// void	algo_b(t_num *astack, t_num *bstack)
-// {
-// 	while (bstack->top >= 0)
-// 	{
-// 		if (find_pos(bstack, find_big(bstack)) == bstack->top - 1)
-// 			sb(bstack);
-// 		else if (find_pos(bstack, find_big(bstack)) > bstack->top / 2
-// 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
-// 			rb(bstack);
-// 		else if (find_pos(bstack, find_big(bstack)) <= bstack->top / 2
-// 			&& find_pos(bstack, find_big(bstack)) != bstack->top)
-// 			rrb(bstack);
-// 		else
-// 			pa(astack, bstack);
-// 		if (astack->top >= 1)
-// 		{
-// 			if (astack->stack[astack->top] > astack->stack[astack->top - 1])
-// 				sa(astack);
-// 		}
-// 	}
-// }
 
 void	sort_hundred(t_num *astack, t_num *bstack)
 {
