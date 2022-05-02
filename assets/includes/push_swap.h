@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 16:30:15 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:08:15 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_num
 	int	*stack;
 	int	top;
 	int	bottom;
+	int	small;
 }	t_num;
 
 // Parser
@@ -70,7 +71,7 @@ void	rrb(t_num *bstack);
 void	sort_three(t_num *astack, t_num *bstack);
 void	sort_five(t_num *astack, t_num *bstack);
 void	sort_ten(t_num *astack, t_num *bstack);
-void	sort_hundred(t_num *astack, t_num *bstack);
+void	sort(t_num *astack, t_num *bstack);
 void	set_ghosted(t_num *astack, t_ghost *ghost);
 
 // remainder
@@ -86,4 +87,7 @@ int		has_less_than(t_num *stack, int num);
 int		has_greater_than(t_num *stack, int num);
 int		nearest_small(t_num *stack, int min);
 int		nearest_max(t_num *stack, int max);
+int		rtn_index(int top, int i, int index);
+
+void	printer(t_num *num1, t_num *num2, int size1, int size2);
 #endif

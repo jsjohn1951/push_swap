@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:26:22 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 14:32:36 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 18:17:28 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ void	bstack_rem(t_num *astack, t_num *bstack)
 {
 	while (bstack->top >= 0)
 	{
-		if (bstack->stack[bstack->top] < bstack->stack[0])
+		if (bstack->stack[bstack->top] < bstack->stack[bstack->top - 1])
 			sb(bstack);
+		if (bstack->stack[bstack->top] < bstack->stack[0]
+			&& bstack->stack[bstack->top - 1] < bstack->stack[0])
+			rrb(bstack);
 		pa(astack, bstack);
 	}
 }

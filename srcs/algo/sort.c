@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 14:33:08 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 18:15:03 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sort_three(t_num *astack, t_num *bstack)
 {
-	if (astack->top <= 2)
+	if (!is_sorted(astack) && astack->top <= 2)
 	{
 		if (astack->stack[astack->top] < astack->stack[astack->top - 1]
 			&& astack->stack[astack->top] < astack->stack[bstack->bottom]
@@ -31,27 +31,26 @@ void	sort_three(t_num *astack, t_num *bstack)
 
 void	sort_five(t_num *astack, t_num *bstack)
 {
-	int	small;
-	int	flag;
+	t_ghost	ghost;
 
-	if (!is_sorted(astack))
+	if (!is_sorted(astack) && astack->top <= 4)
 	{
-		while (astack->top > 2)
+		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
+		set_ghosted(astack, &ghost);
+		while (astack->top >= 3)
 		{
-			flag = 0;
-			small = find_small(astack);
-			if (find_pos(astack, small) < astack->top / 2)
-				flag = 1;
-			while (astack->stack[astack->top] != small && flag)
-				rra(astack);
-			while (astack->stack[astack->top] != small && !flag)
+			if (astack->stack[astack->top] <= ghost.ghosted[3])
+				pb(astack, bstack);
+			if (nearest_small(astack, ghost.ghosted[3]))
 				ra(astack);
-			pb(astack, bstack);
+			else
+				rra(astack);
 		}
-		sort_three(astack, bstack);
+		while (!is_sorted(astack))
+			sort_three(astack, bstack);
+		bstack_rem(astack, bstack);
+		free(ghost.ghosted);
 	}
-	while (bstack->top >= bstack->bottom)
-		pa(astack, bstack);
 }
 
 void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
@@ -108,7 +107,7 @@ void	algo_b(t_num *astack, t_num *bstack, t_ghost *ghost, int max_index)
 	bstack_rem(astack, bstack);
 }
 
-void	sort_hundred(t_num *astack, t_num *bstack)
+void	sort(t_num *astack, t_num *bstack)
 {
 	t_ghost	ghost;
 	int		min_index;
@@ -117,7 +116,9 @@ void	sort_hundred(t_num *astack, t_num *bstack)
 	if (!is_sorted(astack))
 	{
 		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
-		if (astack->top < 100)
+		if (astack->top <= 4)
+			min_index = 2;
+		else if (astack->top < 100)
 			min_index = (astack->top) / 5;
 		else
 			min_index = (astack->top) / 11;
