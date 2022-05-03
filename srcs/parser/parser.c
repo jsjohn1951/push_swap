@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 13:30:48 by wismith           #+#    #+#             */
-/*   Updated: 2022/04/29 13:26:04 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 23:11:52 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	add_el(t_num *astack, t_num *bstack, char *s)
 	while (matrix[i])
 	{
 		astack->stack[j] = ft_atoi_mod(matrix[i], &flag);
+		if (non_num(matrix[i]))
+			flag.max = 1;
 		free(matrix[i]);
 		i++;
 		j++;

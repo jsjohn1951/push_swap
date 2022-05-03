@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 17:08:15 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/02 23:16:45 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ void	parser(t_num *astack, t_num *bstack, char **argv);
 void	unidentifiedchar(char **argv);
 void	check_num_arg(int argc);
 void	duplicatecheck(t_num *astack, t_num *bstack, int size);
+int		non_num(char *s);
 int		errmsg(t_num *astack, t_num *bstack);
+int		emptycheck(char *s);
 
 // Op
 void	sa(t_num *astack);
