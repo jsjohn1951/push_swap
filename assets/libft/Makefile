@@ -6,7 +6,7 @@
 #    By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/21 16:52:51 by wismith           #+#    #+#              #
-#    Updated: 2022/04/23 19:44:55 by wismith          ###   ########.fr        #
+#    Updated: 2022/05/06 18:37:45 by wismith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,28 +37,23 @@ LIST =	ft_atoi ft_bzero ft_calloc\
 		assets/ft_puthex assets/ft_putptr\
 		ft_split_mod
 
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 CC = gcc
 
 OBJ_DIR = Objects
 SRC = src
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(LIST)))
-FT_PRINTF = ft_printf
 
 $(OBJ_DIR)/%.o : src/%.c
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)/assets
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all : $(NAME)
-	tput setaf 3
-	echo ""
-	echo "->" | tr -d '\n'
-	tput setaf 2
-	echo " libft provided " | tr -d '\n'
-	tput setaf 3
-	echo "<-"
+	tput setaf 3; echo "\n->" | tr -d '\n'
+	tput setaf 2; echo " libft provided " | tr -d '\n'
+	tput setaf 3; echo "<-"
 	tput setaf 7
 
 $(NAME) : $(OBJ) $(HEADER) $(SRC)
@@ -69,13 +64,13 @@ $(NAME) : $(OBJ) $(HEADER) $(SRC)
 
 clean:
 	@tput setaf 3; echo "\nCleaning->"
-	@rm -r -f $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR)
 	@tput setaf 1; echo "Objects->" | tr -d '\n'
 	@tput setaf 2; echo "       [ok] [ok]\n"
 
 fclean:
 	@tput setaf 3; echo "Cleaning->"
-	@rm -r -f Library
+	@rm -rf Library
 	@tput setaf 1; echo "Libraries->" | tr -d '\n'
 	@tput setaf 2; echo "     [ok] [ok]\n"
 
