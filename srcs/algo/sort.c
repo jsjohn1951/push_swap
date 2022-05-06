@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 22:36:18 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/06 19:04:58 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	sort_five(t_num *astack, t_num *bstack)
 			else
 				rra(astack);
 		}
-		while (!is_sorted(astack))
-			sort_three(astack, bstack);
 		bstack_rem(astack, bstack);
 		free(ghost.ghosted);
 	}
