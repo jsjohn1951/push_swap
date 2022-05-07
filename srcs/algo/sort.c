@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/07 20:09:34 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/08 00:15:50 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ void	sort(t_num *astack, t_num *bstack)
 	if (!is_sorted(astack) && astack->top >= 5)
 	{
 		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
-		if (astack->top <= 4)
-			min_index = 2;
-		else if (astack->top < 100)
+		if (astack->top < 100)
 			min_index = (astack->top) / 5;
 		else
 			min_index = (astack->top) / 11;
