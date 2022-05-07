@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/07 17:57:00 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/07 20:00:04 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ void	rb(t_num *bstack);
 void	rrb(t_num *bstack);
 
 // algo
-void	sort_three(t_num *astack, t_num *bstack);
+void	sort_two(t_num *astack);
+void	sort_three(t_num *astack);
 void	sort_five(t_num *astack, t_num *bstack);
-void	sort_ten(t_num *astack, t_num *bstack);
 void	sort(t_num *astack, t_num *bstack);
 void	set_ghosted(t_num *astack, t_ghost *ghost);
+void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index);
+void	algo_b(t_num *astack, t_num *bstack, t_ghost *ghost, int max_index);
 
 // remainder
 void	astack_rem(t_num *astack, t_num *bstack);
@@ -92,5 +94,8 @@ int		has_greater_than(t_num *stack, int num);
 int		nearest_small(t_num *stack, int min);
 int		nearest_max(t_num *stack, int max);
 int		rtn_index(int top, int i, int index);
+
+//printer
+void	printer(t_num *num1, t_num *num2, int size1, int size2);
 
 #endif
