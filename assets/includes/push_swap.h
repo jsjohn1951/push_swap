@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/06 18:59:56 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/07 17:57:00 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,11 @@ void	set_ghosted(t_num *astack, t_ghost *ghost);
 // remainder
 void	astack_rem(t_num *astack, t_num *bstack);
 void	bstack_rem(t_num *astack, t_num *bstack);
+void	sort_five_bstack_rem(t_num *astack, t_num *bstack);
 
 // tools
 int		find_small(t_num *stack);
+int		find_big(t_num *stack);
 int		find_pos(t_num *stack, int small);
 int		is_sorted(t_num *stack);
 int		ft_atoi_mod(const char *nptr, t_flags *flag);

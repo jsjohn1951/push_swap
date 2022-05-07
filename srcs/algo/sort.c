@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 12:10:53 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/06 19:04:58 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/07 17:52:41 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,43 @@ void	sort_five(t_num *astack, t_num *bstack)
 	{
 		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
 		set_ghosted(astack, &ghost);
-		while (astack->top >= 3)
+		while (astack->top >= 2)
 		{
-			if (astack->stack[astack->top] <= ghost.ghosted[3])
+			if (astack->stack[astack->top - 1] <= ghost.ghosted[2])
+				sa(astack);
+			if (astack->stack[astack->top] <= ghost.ghosted[2])
 				pb(astack, bstack);
-			if (nearest_small(astack, ghost.ghosted[3]))
-				ra(astack);
-			else
+			if (nearest_small(astack, ghost.ghosted[2]))
 				rra(astack);
+			else
+				ra(astack);
 		}
-		bstack_rem(astack, bstack);
+		sort_five_bstack_rem(astack, bstack);
 		free(ghost.ghosted);
 	}
 }
+
+// void	sort_five(t_num *astack, t_num *bstack)
+// {
+// 	t_ghost	ghost;
+
+// 	if (!is_sorted(astack) && astack->top <= 4)
+// 	{
+// 		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
+// 		set_ghosted(astack, &ghost);
+// 		while (astack->top >= 3)
+// 		{
+// 			if (astack->stack[astack->top] <= ghost.ghosted[3])
+// 				pb(astack, bstack);
+// 			if (nearest_small(astack, ghost.ghosted[3]))
+// 				ra(astack);
+// 			else
+// 				rra(astack);
+// 		}
+// 		// bstack_rem(astack, bstack);
+// 		free(ghost.ghosted);
+// 	}
+// }
 
 void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 {
@@ -111,7 +135,7 @@ void	sort(t_num *astack, t_num *bstack)
 	int		min_index;
 	int		max_index;
 
-	if (!is_sorted(astack))
+	if (!is_sorted(astack) && astack->top >= 5)
 	{
 		ghost.ghosted = (int *)ft_calloc(astack->top + 2, sizeof(int));
 		if (astack->top <= 4)
