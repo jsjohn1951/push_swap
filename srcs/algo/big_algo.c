@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 19:53:30 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/07 20:14:13 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/07 22:16:09 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@ void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 {
 	int	min;
 	int	top;
+	int	div;
 
 	min = 0;
 	top = astack->top;
-	while (astack->top >= 6)
+	if (astack->top < 100)
+		div = 5;
+	else
+		div = 11;
+	while (astack->top >= div)
 	{
 		while (has_less_than(astack, ghost->ghosted[top - min]) && min <= top)
 		{
