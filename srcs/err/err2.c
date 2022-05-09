@@ -6,11 +6,26 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 23:08:03 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/09 14:20:55 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/09 14:50:36 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../assets/includes/push_swap.h"
+
+int	flagged(char **argv, int i, int j, int flag)
+{
+	if ((argv[i][j] == '-'
+		&& (argv[i][j + 1] < '0' || argv[i][j + 1] > '9'))
+		|| ((argv[i][j] >= '0' && argv[i][j] <= '9')
+		&& argv[i][j + 1] == '-'))
+		flag = 1;
+	if ((argv[i][j] == '+'
+		&& (argv[i][j + 1] < '0' || argv[i][j + 1] > '9'))
+		|| ((argv[i][j] >= '0' && argv[i][j] <= '9')
+		&& argv[i][j + 1] == '+'))
+		flag = 1;
+	return (flag);
+}
 
 void	unidentifiedchar(char **argv)
 {
@@ -26,18 +41,7 @@ void	unidentifiedchar(char **argv)
 		if (!ft_strlen(argv[i]) || !emptycheck(argv[i]))
 			flag = 1;
 		while (argv[i][++j])
-		{
-			if ((argv[i][j] == '-'
-				&& (argv[i][j + 1] < '0' || argv[i][j + 1] > '9'))
-				|| ((argv[i][j] >= '0' && argv[i][j] <= '9')
-				&& argv[i][j + 1] == '-'))
-				flag = 1;
-			if ((argv[i][j] == '+'
-				&& (argv[i][j + 1] < '0' || argv[i][j + 1] > '9'))
-				|| ((argv[i][j] >= '0' && argv[i][j] <= '9')
-				&& argv[i][j + 1] == '+'))
-				flag = 1;
-		}
+			flag = flagged(argv, i, j, flag);
 	}
 	if (flag)
 	{

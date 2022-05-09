@@ -6,7 +6,7 @@
 #    By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/03 19:47:17 by wismith           #+#    #+#              #
-#    Updated: 2022/05/07 19:53:22 by wismith          ###   ########.fr        #
+#    Updated: 2022/05/09 14:59:32 by wismith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRCS = push_swap parser/parser\
 		tools/ft_atoi_mod tools/finder2\
 		algo/sort_ghost tools/finder3\
 		algo/remainder err/err2 algo/big_algo\
-		printer
 
 OBJ_DIR = assets/Objects
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRCS)))

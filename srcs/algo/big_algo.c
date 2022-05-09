@@ -6,11 +6,18 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 19:53:30 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/07 22:16:09 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/09 14:55:39 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../assets/includes/push_swap.h"
+
+int	div_finder(t_num *stack)
+{
+	if (stack->top < 100)
+		return (5);
+	return (11);
+}
 
 void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 {
@@ -20,10 +27,7 @@ void	algo_a(t_num *astack, t_num *bstack, t_ghost *ghost, int min_index)
 
 	min = 0;
 	top = astack->top;
-	if (astack->top < 100)
-		div = 5;
-	else
-		div = 11;
+	div = div_finder(astack);
 	while (astack->top >= div)
 	{
 		while (has_less_than(astack, ghost->ghosted[top - min]) && min <= top)

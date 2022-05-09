@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:20:20 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/07 20:00:04 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/09 14:59:01 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,5 @@ int		has_greater_than(t_num *stack, int num);
 int		nearest_small(t_num *stack, int min);
 int		nearest_max(t_num *stack, int max);
 int		rtn_index(int top, int i, int index);
-
-//printer
-void	printer(t_num *num1, t_num *num2, int size1, int size2);
 
 #endif
