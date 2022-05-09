@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 23:08:03 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/02 23:15:43 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/09 14:20:55 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	unidentifiedchar(char **argv)
 				|| ((argv[i][j] >= '0' && argv[i][j] <= '9')
 				&& argv[i][j + 1] == '-'))
 				flag = 1;
+			if ((argv[i][j] == '+'
+				&& (argv[i][j + 1] < '0' || argv[i][j + 1] > '9'))
+				|| ((argv[i][j] >= '0' && argv[i][j] <= '9')
+				&& argv[i][j + 1] == '+'))
+				flag = 1;
 		}
 	}
 	if (flag)
@@ -47,7 +52,7 @@ int	non_num(char *s)
 
 	i = -1;
 	while (s[++i])
-		if (!(s[i] >= '0' && s[i] <= '9') && s[i] != '-')
+		if (!(s[i] >= '0' && s[i] <= '9') && s[i] != '-' && s[i] != '+')
 			return (1);
 	return (0);
 }
