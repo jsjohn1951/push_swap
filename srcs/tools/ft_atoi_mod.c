@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 18:13:57 by wismith           #+#    #+#             */
-/*   Updated: 2022/04/24 18:44:39 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:36:47 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_atoi_mod(const char *nptr, t_flags *flag)
 		res *= 10;
 		res += nptr[i++] - '0';
 	}
-	if (res >= INT_MAX && ncounter == 0)
+	if (res > INT_MAX && ncounter == 0)
 		flag->max = 1;
 	if ((long)((res * -1) + 1) <= INT_MIN)
 		flag->min = 1;
