@@ -6,7 +6,7 @@
 /*   By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:26:22 by wismith           #+#    #+#             */
-/*   Updated: 2022/05/07 17:54:50 by wismith          ###   ########.fr       */
+/*   Updated: 2022/05/10 17:59:59 by wismith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	astack_rem(t_num *astack, t_num *bstack)
 			ra(astack);
 		pb(astack, bstack);
 	}
-	if (astack->stack[astack->top] > astack->stack[0])
-		sa(astack);
+	if (astack->top == 0)
+		pb(astack, bstack);
 }
 
 void	bstack_rem(t_num *astack, t_num *bstack)
